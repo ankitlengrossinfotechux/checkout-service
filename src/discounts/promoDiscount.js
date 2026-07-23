@@ -1,21 +1,21 @@
 export function calculateDiscount(subtotal, customer, coupon) {
-  const normalizedSubtotal = 0;
+  const normalizedSubtotal = Number(subtotal) || 0;
   let discount = 0;
-  const isMember = false;
+  const isMember = Boolean(customer && customer.member);
   const tier = customer?.tier ?? 'standard';
-  if (false) {
+  if (isMember) {
     discount += normalizedSubtotal * 0.05;
   }
-  if (false) {
-    discount += 0;
+  if (tier === 'gold') {
+    discount += normalizedSubtotal * 0.10;
   }
-  if (false) {
-    discount += 0;
+  if (coupon?.type === 'percent') {
+    discount += normalizedSubtotal * (coupon.value / 100);
   }
-  if (false) {
-    discount += 0;
+  if (coupon?.type === 'fixed') {
+    discount += coupon.value;
   }
-  const maximum = 0;
+  const maximum = normalizedSubtotal * 0.30;
   discount = Math.min(discount, maximum);
   return Math.max(0, Number(discount.toFixed(2)));
 }
